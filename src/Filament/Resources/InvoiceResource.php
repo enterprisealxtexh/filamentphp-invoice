@@ -403,10 +403,10 @@ class InvoiceResource extends Resource
                 Tables\Filters\TrashedFilter::make(),
             ])
             ->recordActions([
-                Tables\Actions\ViewAction::make()
+                Actions\ViewAction::make()
                     ->iconButton()
                     ->tooltip(trans('filament-invoices::messages.invoices.actions.view_invoice')),
-                Tables\Actions\EditAction::make()
+                Actions\EditAction::make()
                     ->iconButton()
                     ->tooltip(trans('filament-invoices::messages.invoices.actions.edit_invoice')),
                 Actions\Action::make('pay')
