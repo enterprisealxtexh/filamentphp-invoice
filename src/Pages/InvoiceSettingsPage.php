@@ -2,15 +2,20 @@
 
 namespace Alxtexh\FilamentInvoices\Pages;
 
-use Filament\Forms;
+use Filament\Schemas;
+use Filament\Schemas\Components as SchemaComponents;
+use Filament\Forms\Components;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Filament\Schemas\Schema;
 use Alxtexh\FilamentInvoices\Services\Templates\TemplateFactory;
 use Alxtexh\FilamentInvoices\Settings\InvoiceSettings;
 
-class InvoiceSettingsPage extends Page
+class InvoiceSettingsPage extends Page implements HasForms
 {
+    use InteractsWithForms;
     protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-cog-6-tooth';
 
     protected string $view = 'filament-invoices::pages.settings';
@@ -55,29 +60,29 @@ class InvoiceSettingsPage extends Page
     {
         return $form
             ->schema([
-                Forms\Components\Tabs::make('Settings')
+                SchemaComponents\Tabs::make('Settings')
                     ->tabs([
-                        Forms\Components\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.company'))
+                        SchemaComponents\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.company'))
                             ->schema([
-                                Forms\Components\TextInput::make('company_name')
+                                Components\TextInput::make('company_name')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_name'))
                                     ->required(),
-                                Forms\Components\TextInput::make('company_email')
+                                Components\TextInput::make('company_email')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_email'))
                                     ->email(),
-                                Forms\Components\TextInput::make('company_phone')
+                                Components\TextInput::make('company_phone')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_phone')),
-                                Forms\Components\Textarea::make('company_address')
+                                Components\Textarea::make('company_address')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_address'))
                                     ->rows(3),
-                                Forms\Components\FileUpload::make('company_logo')
+                                Components\FileUpload::make('company_logo')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_logo'))
                                     ->image()
                                     ->directory('invoices/logos'),
                             ]),
-                        Forms\Components\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.defaults'))
+                        SchemaComponents\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.defaults'))
                             ->schema([
-                                Forms\Components\Select::make('default_currency')
+                                Components\Select::make('default_currency')
                                     ->label(trans('filament-invoices::messages.settings.columns.default_currency'))
                                     ->options([
                                         'KES' => 'KES - Kenyan Shilling',
@@ -91,49 +96,49 @@ class InvoiceSettingsPage extends Page
                                         'INR' => 'INR - Indian Rupee',
                                         'AED' => 'AED - UAE Dirham',
                                     ]),
-                                Forms\Components\Select::make('default_template')
+                                Components\Select::make('default_template')
                                     ->label(trans('filament-invoices::messages.settings.columns.default_template'))
                                     ->options(fn () => TemplateFactory::getOptions()),
-                                Forms\Components\TextInput::make('default_payment_terms')
+                                Components\TextInput::make('default_payment_terms')
                                     ->label(trans('filament-invoices::messages.settings.columns.default_payment_terms'))
                                     ->numeric()
                                     ->suffix('days'),
-                                Forms\Components\TextInput::make('default_tax_rate')
+                                Components\TextInput::make('default_tax_rate')
                                     ->label(trans('filament-invoices::messages.settings.columns.default_tax_rate'))
                                     ->numeric()
                                     ->suffix('%'),
-                                Forms\Components\TextInput::make('invoice_prefix')
+                                Components\TextInput::make('invoice_prefix')
                                     ->label(trans('filament-invoices::messages.settings.columns.invoice_prefix'))
                                     ->default('INV-'),
                             ]),
-                        Forms\Components\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.email'))
+                        SchemaComponents\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.email'))
                             ->schema([
-                                Forms\Components\TextInput::make('email_subject_template')
+                                Components\TextInput::make('email_subject_template')
                                     ->label(trans('filament-invoices::messages.settings.columns.email_subject_template'))
                                     ->helperText('Available placeholders: {uuid}, {company_name}, {customer_name}, {total}, {currency}, {due_date}'),
-                                Forms\Components\Textarea::make('email_body_template')
+                                Components\Textarea::make('email_body_template')
                                     ->label(trans('filament-invoices::messages.settings.columns.email_body_template'))
                                     ->helperText('Available placeholders: {uuid}, {company_name}, {customer_name}, {total}, {currency}, {due_date}')
                                     ->rows(5),
-                                Forms\Components\TextInput::make('email_cc')
+                                Components\TextInput::make('email_cc')
                                     ->label(trans('filament-invoices::messages.settings.columns.email_cc'))
                                     ->email(),
-                                Forms\Components\TextInput::make('email_bcc')
+                                Components\TextInput::make('email_bcc')
                                     ->label(trans('filament-invoices::messages.settings.columns.email_bcc'))
                                     ->email(),
                             ]),
-                        Forms\Components\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.pdf'))
+                        SchemaComponents\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.pdf'))
                             ->schema([
-                                Forms\Components\Select::make('paper_size')
+                                Components\Select::make('paper_size')
                                     ->label(trans('filament-invoices::messages.settings.columns.pdf_paper_size'))
                                     ->options([
                                         'a4' => 'A4',
                                         'letter' => 'Letter',
                                         'legal' => 'Legal',
                                     ]),
-                                Forms\Components\Toggle::make('include_terms')
+                                Components\Toggle::make('include_terms')
                                     ->label('Include Terms & Conditions'),
-                                Forms\Components\Textarea::make('terms_text')
+                                Components\Textarea::make('terms_text')
                                     ->label('Terms & Conditions Text')
                                     ->rows(4),
                             ]),
