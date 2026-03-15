@@ -11,7 +11,7 @@ class CreativeTemplate extends AbstractTemplate
 
     public function getLabel(): string
     {
-        return trans('filament-invoices::messages.templates.creative');
+        return 'Creative';
     }
 
     public function getDescription(): string

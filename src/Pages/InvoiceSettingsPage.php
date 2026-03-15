@@ -78,7 +78,9 @@ class InvoiceSettingsPage extends Page implements HasForms
                                 Components\FileUpload::make('company_logo')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_logo'))
                                     ->image()
-                                    ->directory('invoices/logos'),
+                                    ->disk('public')
+                                    ->directory('invoices/logos')
+                                    ->visibility('public'),
                             ]),
                         SchemaComponents\Tabs\Tab::make(trans('filament-invoices::messages.settings.sections.defaults'))
                             ->schema([

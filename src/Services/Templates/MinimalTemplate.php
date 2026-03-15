@@ -11,7 +11,7 @@ class MinimalTemplate extends AbstractTemplate
 
     public function getLabel(): string
     {
-        return trans('filament-invoices::messages.templates.minimal');
+        return 'Minimal';
     }
 
     public function getDescription(): string

@@ -11,7 +11,7 @@ class ProfessionalTemplate extends AbstractTemplate
 
     public function getLabel(): string
     {
-        return trans('filament-invoices::messages.templates.professional');
+        return 'Professional';
     }
 
     public function getDescription(): string

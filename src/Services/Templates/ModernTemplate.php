@@ -11,7 +11,7 @@ class ModernTemplate extends AbstractTemplate
 
     public function getLabel(): string
     {
-        return trans('filament-invoices::messages.templates.modern');
+        return 'Modern';
     }
 
     public function getDescription(): string
