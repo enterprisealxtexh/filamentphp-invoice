@@ -297,24 +297,21 @@ class InvoiceResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('invoice_number')
-                    ->label(trans('filament-invoices::messages.invoices.columns.invoice_number'))
-                    ->description(fn ($record) => ($record->type ?? '') . ' ' . trans('filament-invoices::messages.invoices.columns.by') . ' ' . ($record->user?->name ?? ''))
+                    ->label('Invoice #')
                     ->sortable()
-                    ->searchable()
-                    ->toggleable(),
-                Tables\Columns\TextColumn::make('for_id')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('account')
                     ->state(fn ($record) => $record->for_type ? ($record->for_type::find($record->for_id)?->name ?? 'N/A') : 'N/A')
-                    ->description(fn ($record) => $record->from_type ? (trans('filament-invoices::messages.invoices.columns.from') . ': ' . ($record->from_type::find($record->from_id)?->name ?? '')) : '')
-                    ->label(trans('filament-invoices::messages.invoices.columns.account'))
+                    ->label('Account')
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('date')
-                    ->label(trans('filament-invoices::messages.invoices.columns.date'))
+                    ->label('Date')
                     ->date('Y-m-d')
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('due_date')
-                    ->label(trans('filament-invoices::messages.invoices.columns.due_date'))
+                    ->label('Due Date')
                     ->tooltip(fn ($record) => $record->due_date ? ($record->due_date->isFuture() ? $record->due_date->diffForHumans() : ($record->due_date->isToday() ? 'Due Today!' : 'Overdue!')) : '')
                     ->color(fn ($record) => $record->due_date ? ($record->due_date->isFuture() ? 'success' : ($record->due_date->isToday() ? 'warning' : 'danger')) : 'gray')
                     ->icon(fn ($record) => $record->due_date ? ($record->due_date->isFuture() ? 'heroicon-s-check-circle' : ($record->due_date->isToday() ? 'heroicon-s-exclamation-circle' : 'heroicon-s-x-circle')) : null)
@@ -322,7 +319,7 @@ class InvoiceResource extends Resource
                     ->sortable()
                     ->toggleable(),
                 Tables\Columns\TextColumn::make('status')
-                    ->label(trans('filament-invoices::messages.invoices.columns.status'))
+                    ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
@@ -342,38 +339,37 @@ class InvoiceResource extends Resource
                     })
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('name')
-                    ->label(trans('filament-invoices::messages.invoices.columns.name'))
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->description(fn ($record) => $record->phone)
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('shipping')
-                    ->label(trans('filament-invoices::messages.invoices.columns.shipping'))
+                    ->label('Shipping')
                     ->money(fn ($record) => $record->currency ?? 'KES')
                     ->color('warning')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('vat')
-                    ->label(trans('filament-invoices::messages.invoices.columns.vat'))
+                    ->label('Tax/VAT')
                     ->money(fn ($record) => $record->currency ?? 'KES')
                     ->color('warning')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('discount')
-                    ->label(trans('filament-invoices::messages.invoices.columns.discount'))
+                    ->label('Discount')
                     ->money(fn ($record) => $record->currency ?? 'KES')
                     ->color('danger')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('paid')
-                    ->label(trans('filament-invoices::messages.invoices.columns.paid'))
+                    ->label('Paid')
                     ->money(fn ($record) => $record->currency ?? 'KES')
                     ->color('success')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
                 Tables\Columns\TextColumn::make('total')
-                    ->label(trans('filament-invoices::messages.invoices.columns.total'))
+                    ->label('Total')
                     ->money(fn ($record) => $record->currency ?? 'KES')
                     ->color('primary')
                     ->sortable(),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(trans('filament-invoices::messages.invoices.columns.updated_at'))
+                    ->label('Updated At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
