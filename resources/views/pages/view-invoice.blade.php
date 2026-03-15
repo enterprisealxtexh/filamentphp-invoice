@@ -240,7 +240,7 @@
 
                         @if($settings->company_logo)
                             <div>
-                                <img src="{{ url('storage/' . $settings->company_logo) }}" alt="{{ $settings->company_name }}" class="invoice-logo">
+                                <img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($settings->company_logo) }}" alt="{{ $settings->company_name }}" class="invoice-logo">
                             </div>
                         @endif
 
