@@ -296,8 +296,8 @@ class InvoiceResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('uuid')
-                    ->label(trans('filament-invoices::messages.invoices.columns.uuid'))
+                Tables\Columns\TextColumn::make('invoice_number')
+                    ->label(trans('filament-invoices::messages.invoices.columns.invoice_number'))
                     ->description(fn ($record) => ($record->type ?? '') . ' ' . trans('filament-invoices::messages.invoices.columns.by') . ' ' . ($record->user?->name ?? ''))
                     ->sortable()
                     ->searchable()
