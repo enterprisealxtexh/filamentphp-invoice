@@ -2,8 +2,8 @@
     <form wire:submit="save" class="space-y-6">
         {{ $this->form }}
 
-        <div class="flex gap-3 pt-8">
-            <x-filament::button type="submit">
+        <div class="mt-6 flex justify-start">
+            <x-filament::button type="submit" size="lg">
                 {{ trans('filament-invoices::messages.settings.save') }}
             </x-filament::button>
         </div>

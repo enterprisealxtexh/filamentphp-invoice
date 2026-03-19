@@ -44,7 +44,12 @@ class InvoiceResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return trans('filament-invoices::messages.invoices.group');
+        return 'Finance';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 22;
     }
 
     public static function getLabel(): ?string

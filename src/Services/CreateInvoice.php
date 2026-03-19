@@ -143,16 +143,26 @@ class CreateInvoice
 
     public function save(): Invoice
     {
+        $invoiceNumber = strtoupper(\Illuminate\Support\Str::random(8));
+        
         $invoice = Invoice::create([
             'uuid' => 'INV-' . strtoupper(\Illuminate\Support\Str::random(8)),
+            'invoice_number' => 'INV-' . $invoiceNumber,
             'for_type' => $this->for_type,
             'for_id' => $this->for_id,
             'from_type' => $this->from_type,
             'from_id' => $this->from_id,
-            'user_id' => auth()->id(),
+            'user_id' => $this->from_id,
             'name' => $this->name,
             'phone' => $this->phone,
             'address' => $this->address,
+            'client_name' => $this->name ?? '',
+            'client_email' => '',
+            'client_phone' => $this->phone ?? '',
+            'client_address' => $this->address ?? '',
+            'service_description' => '',
+            'amount' => 0,
+            'total_amount' => 0,
             'due_date' => $this->due_date ?? now()->addDays(30),
             'date' => $this->date ?? now(),
             'status' => $this->status,
@@ -189,6 +199,8 @@ class CreateInvoice
             'discount' => $totalDiscount,
             'vat' => $totalVat,
             'total' => $totalAmount + $this->shipping,
+            'amount' => $totalAmount,
+            'total_amount' => $totalAmount + $this->shipping,
         ]);
 
         return $invoice->fresh();

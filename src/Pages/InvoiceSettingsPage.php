@@ -29,7 +29,12 @@ class InvoiceSettingsPage extends Page implements HasForms
 
     public static function getNavigationGroup(): ?string
     {
-        return trans('filament-invoices::messages.invoices.group');
+        return 'Finance';
+    }
+
+    public static function getNavigationSort(): ?int
+    {
+        return 21;
     }
 
     public function mount(): void
@@ -78,6 +83,8 @@ class InvoiceSettingsPage extends Page implements HasForms
                                 Components\FileUpload::make('company_logo')
                                     ->label(trans('filament-invoices::messages.settings.columns.company_logo'))
                                     ->image()
+                                    ->optimize('webp', 85)
+                                    ->maxImageWidth(1920)
                                     ->disk('public')
                                     ->directory('invoices/logos')
                                     ->visibility('public'),

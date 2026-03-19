@@ -37,6 +37,12 @@ abstract class AbstractTemplate implements InvoiceTemplateInterface
             return null;
         }
 
-        return url('storage/' . $this->settings->company_logo);
+        $logo = (string) $this->settings->company_logo;
+
+        if (str_starts_with($logo, 'http://') || str_starts_with($logo, 'https://')) {
+            return $logo;
+        }
+
+        return '/storage/' . ltrim($logo, '/');
     }
 }
